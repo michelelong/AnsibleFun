@@ -1,0 +1,15 @@
+---
+- name: Test variable
+  debug:
+    var: testVar
+
+- name: Start httpd
+  service:
+    name: apache2
+    state: started
+
+- name: Create index.html with Jinja template
+  template:
+    src: jinja2.j2
+    dest: /var/www/html/index.html
+ 

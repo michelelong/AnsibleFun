@@ -1,0 +1,15 @@
+---
+- hosts: webservers
+  become: yes
+  vars:
+    packages: [git,dmitry]          
+  
+  tasks:
+    - name: Install packages 
+      apt:
+        name: "{{ packages }}"
+        state: latest
+
+# for item in packages
+#   apt install item
+#   where item is git and dmitry 

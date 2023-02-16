@@ -1,0 +1,11 @@
+---
+- name: Check Docker Service 
+  become: yes
+  hosts: test
+  
+  tasks:
+
+  - name: Restart service docker
+    ansible.builtin.service:
+      name: docker
+      state: restarted

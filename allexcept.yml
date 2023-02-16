@@ -1,0 +1,12 @@
+---
+# All hosts except webserver group
+- hosts: all:!webservers
+  become: yes
+
+  tasks:
+    - name: Uninstall docker and sync package list
+      apt:
+       name: docker
+       state: absent
+       # Update apt package list
+       update_cache: yes

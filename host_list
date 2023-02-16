@@ -1,0 +1,11 @@
+localhost ansible_connection=local
+
+[testing]
+10.0.0.2 ansible_connection=ssh ansible_user=kali
+
+[webservers]
+10.0.0.2
+
+[webservers:vars]
+# See inventoryVars.yml for use of vars
+tmp_file=/tmp/log

@@ -1,0 +1,21 @@
+---
+# ipaddr is a builtin filter
+
+- hosts: localhost
+  connection: local
+  
+  vars:
+    ipgateway: 10.0.0.1
+    ipnetmask: 255.255.255.224
+  
+  tasks:
+  - set_fact: ip1="{{ipgateway}}/{{ipnetmask}}"
+  - set_fact: ip2="{{ip1|ansible.utils.ipaddr('network/prefix')}}"
+  - debug:
+        msg: "Our network is {{ip2}}, gateway is {{ipgateway}}"
+
+# Calculate the next usable host address  
+  - set_fact: ip3="{{ipgateway|ansible.utils.ipv4('int') + 1}}"
+  - set_fact: ip4="{{ip3|ansible.utils.ipv4('address')}}/{{ip2|ansible.utils.ipv4('prefix')}}"  
+  - debug:
+        msg: "The next host address is: {{ip4}}"

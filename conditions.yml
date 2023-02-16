@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+# When OS is RedHat, upgrade distribution to latest version 
+    - name: Upgrade Redhat
+      when: ansible_os_family == "Redhat"
+      yum: name=* state=latest
+
+    - name: Upgrade Debian
+      when: ansible_os_family == "Debian"
+      apt: upgrade=dist update_cache=yes 

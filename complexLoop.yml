@@ -1,0 +1,26 @@
+---
+- hosts: webservers
+  become: yes
+  vars:
+    websites:
+      aws_sites:
+        author: anelson
+        author_id: as001     
+      ms_sites:
+        author: bsmith
+        author_id: bs002
+      google_sites:
+        author: psmith
+        author_id: ps001
+      misc_sites:
+        author: anelson
+        author_id: as001   
+  
+  tasks:
+    - name: Print data 
+      debug:
+        msg: "Results: {{item.value.author_id}}"
+      with_dict: '{{websites}}'
+      when: 'item.value.author_id == "as001"'
+# Iterate over websites
+# Print msg when ID as001 is found

@@ -1,0 +1,27 @@
+# Start execution at a specific task name
+# ansible-playbook startInteractive.yml --start-at-task 'Install NTP'
+
+# Interactively execute each task in a playbook
+# ansible-playbook startInteractive.yml --step
+
+---
+- hosts: webservers
+  become: yes
+
+  tasks:
+    - name: Install Apache2
+      apt:
+       name: apache2
+       state: present
+       # Update package list
+       update_cache: yes
+       # Only update package list if older than 3600 seconds (1hr)
+       cache_valid_time: 3600
+
+    - name: Install NTP
+      apt:
+       name: ntp
+       state: present
+
+    - name: Start NTP
+      service: name=ntp state=started enabled=yes

@@ -1,0 +1,8 @@
+---
+- name: First Test Playbook 
+  hosts: all 
+#  remote_user: kali
+  
+  tasks:
+    - name: Ping Test Network
+      ping:

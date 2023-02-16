@@ -1,0 +1,28 @@
+---
+- hosts: webservers
+    
+  vars:
+# Path to copy file
+    target: ~/.ansible/tmp/idempotent.txt
+
+  tasks:
+# Does NOT copy file if no change found 
+  - name: Copy file to hosts 
+    copy:
+      src: idempotent.txt
+      dest: '{{target}}'
+
+  - name: Check if file exists
+    stat:
+      path: /tmp/idempotent.txt 
+    register: register_name
+  
+  - name: Report if file exists
+    debug:
+      msg: "The file exists"
+    when: register_name.stat.exists
+
+  - name: Report if file does not exist
+    debug:
+      msg: "The file exists"
+    when: not register_name.stat.exists
