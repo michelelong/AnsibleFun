@@ -1,12 +1,27 @@
+# ansible-playbook variables.yml -i host_list --ask-vault-pass
+# Prompt for password to decrypt secret
 ---
 - hosts: webservers
 
+  vars: 
+   secret: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          31356631363436633062303834613938343038616537316330646530373865346166653333646133
+          3532303366333934333235333135653538313363313536620a383134393439396638613533313564
+          37396335633965633139663533356131643334366662623361613838373965346239336266323831
+          3330316364636337630a343062656635323737383838336535323565323230333238366135623734
+          3630
   tasks:
     - name: Create a file
       file:
        # See host_list file for definition of {{temp_file}} 
        dest: '{{temp_file}}'
        # Use command line option to set file_state (touch=create)
-       # ansible-playbook inventoryVars.yml -e file_state=touch
+       # ansible-playbook variables.yml -e file_state=touch
        state: '{{file_state}}'
       when: temp_file is defined
+
+# Print out the decrypted secret string
+    - name: Print 
+      debug:
+        var: secret
